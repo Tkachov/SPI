@@ -1,0 +1,61 @@
+<head>
+  <title>Spider Player Web Interface</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="dorfplay.png">
+</head>
+
+<body>
+  {{>main}}
+</body>
+
+<template name="main">
+	<hr>
+	{{#each sources}}
+		{{>song}}
+		<hr>
+	{{/each}}
+</template>
+
+<template name="song">
+	<div class="song">
+		<h1>{{title}}</h1>
+		{{#if active}}
+			{{#with music_data}}
+			<p>{{album}}</p>
+			<p>{{title}}</p>
+			<p>{{artist}}</p>
+			<!--<p>{{duration}}</p>
+			<p>{{genre}}</p>
+			<p>{{mute}}</p>
+			<p>{{position}}</p>
+			<p>{{repeat}}</p>
+			<p>{{repeat_mode}}</p>
+			<p>{{shuffle}}</p>
+			<p>{{state}}</p>
+			<p>{{track}}</p>
+			<p>{{volume}}</p>  -->
+			<input type="range" min="0" max="1" step="0.00001" value="{{slidervalue}}">
+			
+			<div id="buttoncontainer">
+				<img src="previous.png" data-cmd="previous">
+				{{#if playing}}
+				<img src="pause.png" data-cmd="pause">
+				{{else}}
+				<img src="play.png" data-cmd="play">
+				{{/if}}
+				<img src="next.png" data-cmd="next">
+				
+				{{#if muted}}
+					<img src="unmute.png" data-cmd="mute">
+				{{else}}
+					<img src="mute.png" data-cmd="mute">
+				{{/if}}
+			</div>
+			
+			{{/with}}
+		{{else}}
+		<h2>No Connection</h2>
+		{{/if}}
+		
+	</div>
+</template>
