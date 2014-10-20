@@ -29,6 +29,11 @@ if (Meteor.isClient) {
 		
 		"click img" : function(e,tmp) {
 			Meteor.call(e.target.dataset.cmd,tmp.data._id)
+		},
+		
+		"change input[type='range']" : function(e,tmp) {
+			console.log(tmp)
+			Meteor.call("pos",[tmp.data._id,e.target.value])
 		}
 	})
 }
@@ -81,7 +86,7 @@ if (Meteor.isServer) {
 	function updateSource(source) {
 		HTTP.get(completeURL(source.url),undefined,function(err,res) {
 			if(err) {
-				console.warn("Error connecting to "+(source.title||"unnamed source")+" at "+source.url)
+				//console.warn("Error connecting to "+(source.title||"unnamed source")+" at "+source.url)
 				Sources.update(source._id, {
 					$set : {
 						active: false
@@ -113,7 +118,8 @@ if (Meteor.isServer) {
 	
 	
 	function sendCommand(source,command,value) {
-		HTTP.get(completeURL(source.url,false,command,value))
+		console.log(completeURL(source.url,false,command,Math.floor(value)))
+		HTTP.get(completeURL(source.url,false,command,Math.floor(value)))
 	}
 	
 	Meteor.methods({
@@ -124,7 +130,12 @@ if (Meteor.isServer) {
 		previous : function(sourceID) {sendCommand(Sources.findOne(sourceID),"previous")},
 		shuffle : function(sourceID) {sendCommand(Sources.findOne(sourceID),"shuffle")},
 		repeat : function(sourceID) {sendCommand(Sources.findOne(sourceID),"repeat")},
-		mute : function(sourceID) {sendCommand(Sources.findOne(sourceID),"mute")}
-	
+		mute : function(sourceID) {sendCommand(Sources.findOne(sourceID),"mute")},
+		pos : function(args) {
+			console.log(args)
+			var source = Sources.findOne(args[0])
+			
+			sendCommand(source,"position",args[1]*source.music_data.duration)
+		}
 	})
 }
