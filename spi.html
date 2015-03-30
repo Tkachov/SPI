@@ -21,9 +21,14 @@
 		<h1>{{title}}</h1>
 		{{#if active}}
 			{{#with music_data}}
-			<p>{{album}}</p>
-			<p>{{title}}</p>
-			<p>{{artist}}</p>
+			{{#if has_data}}
+				<p>{{album}}</p>
+				<p>{{title}}</p>
+				<p>{{artist}}</p>
+			{{else}} 
+				<p>No meta-data</p>
+			{{/if}}
+			<!--
 			<p>{{duration}}</p>
 			<p>{{genre}}</p>
 			<p>{{mute}}</p>
@@ -33,7 +38,7 @@
 			<p>{{shuffle}}</p>
 			<p>{{state}}</p>
 			<p>{{track}}</p>
-			<p>{{volume}}</p>  
+			<p>{{volume}}</p>   -->
 			<input type="range" min="0" max="1" step="0.00001" value="{{slidervalue}}">
 			
 			<div id="buttoncontainer">
