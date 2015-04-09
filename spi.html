@@ -3,64 +3,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="dorfplay.png">
 </head>
-
 <body>
   {{>main}}
 </body>
-
 <template name="main">
-	<hr>
 	{{#each sources}}
 		{{>song}}
-		<hr>
 	{{/each}}
 </template>
-
 <template name="song">
 	<div class="song">
-		<h1>{{title}}</h1>
 		{{#if active}}
+			<h1>{{title}}</h1>
 			{{#with music_data}}
-			{{#if has_data}}
-				<p>{{album}}</p>
-				<p>{{title}}</p>
-				<p>{{artist}}</p>
-			{{else}} 
-				<p>No meta-data</p>
-			{{/if}}
-			<!--
-			<p>{{duration}}</p>
-			<p>{{genre}}</p>
-			<p>{{mute}}</p>
-			<p>{{position}}</p>
-			<p>{{repeat}}</p>
-			<p>{{repeat_mode}}</p>
-			<p>{{shuffle}}</p>
-			<p>{{state}}</p>
-			<p>{{track}}</p>
-			<p>{{volume}}</p>   -->
-			<input type="range" min="0" max="1" step="0.00001" value="{{slidervalue}}">
-			
-			<div id="buttoncontainer">
-				<img src="previous.png" data-cmd="previous">
-				{{#if playing}}
-				<img src="pause.png" data-cmd="pause">
-				{{else}}
-				<img src="play.png" data-cmd="play">
-				{{/if}}
-				<img src="next.png" data-cmd="next">
-				
-				{{#if muted}}
-					<img src="unmute.png" data-cmd="mute">
-				{{else}}
-					<img src="mute.png" data-cmd="mute">
-				{{/if}}
-			</div>
-			
+				<div class="player">
+					<div id="buttoncontainer">
+						{{#if playing}} <img src="pause.png" data-cmd="pause" class="main_button">
+						{{else}} <img src="play.png" data-cmd="play" class="main_button"> {{/if}}
+						<img src="previous.png" data-cmd="previous">
+						<img src="next.png" data-cmd="next">
+						{{#if muted}} <img src="unmute.png" data-cmd="mute">
+						{{else}} <img src="mute.png" data-cmd="mute"> {{/if}}
+					</div>
+					<div class="track_container">
+						<div class="labels">
+						{{#if has_data}}
+							<p class="label_artist">{{artist}}</p>
+							<p class="label_title">{{title}}</p>
+							<!-- <p>{{album}}</p> -->
+						{{else}}
+							<p class="label_artist">No meta-data</p>
+						{{/if}}
+						</div>
+						<!--
+							<p>{{duration}}</p>
+							<p>{{genre}}</p>
+							<p>{{mute}}</p>
+							<p>{{position}}</p>
+							<p>{{repeat}}</p>
+							<p>{{repeat_mode}}</p>
+							<p>{{shuffle}}</p>
+							<p>{{state}}</p>
+							<p>{{track}}</p>
+							<p>{{volume}}</p>
+						-->
+						<input type="range" min="0" max="1" step="0.00001" value="{{slidervalue}}">
+					</div>
+				</div>
 			{{/with}}
 		{{else}}
-		<h2>No Connection</h2>
+			<h1>{{title}} &mdash; no connection</h1>
 		{{/if}}
-		
 	</div>
 </template>

@@ -73,6 +73,8 @@ if (Meteor.isServer) {
 		//Add sources here!
 		//addSource("192.168.1.1:7777","Foobar's desktop")
 
+		addSource("192.168.1.136:7777", "Tkachov");
+
 		Meteor.setTimeout(mainloop,1000)
 		Meteor.setTimeout(idleloop,200)
 	});
